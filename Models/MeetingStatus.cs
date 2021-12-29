@@ -2,7 +2,7 @@
 {
     public enum MeetingStatus
     {
-        New ,
+        New,
         Started,
         Finished,
         Cancelled
