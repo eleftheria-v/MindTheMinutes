@@ -15,17 +15,20 @@ namespace Meeting_Minutes.Models
         */
 
         [Required]
+        [Display(Name ="Created by")]
         public string? CreatedBy { get; set; }
-        [ForeignKey("CreatedBy")]
-        public virtual User User { get; set; }
+        //[ForeignKey("CreatedBy")]
+       // public virtual User User { get; set; }
 
 
         // The date when the record was updated
         //When the record is first inserted, it must have the same value as DateCreated
         [Required]
+        [Display(Name ="Last Updated")]
         public DateTime DateUpdated { get; set; }
 
         [Required]
+        [Display(Name ="Meeting Date/Time")]
         public DateTime MeetingDate { get; set; } // The date and time when the meeting will take place
 
         /*A status indicating the state of the 
