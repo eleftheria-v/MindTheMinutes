@@ -3,7 +3,7 @@
 namespace Meeting_Minutes.Models
 
 {
-    public class User
+    public class User 
     {
         [Key]
         public int Id { get; set; }
@@ -32,6 +32,13 @@ namespace Meeting_Minutes.Models
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Phone number")]
         public string PhoneNumber { get; set; }
+
+        private readonly string _fullname;
+
+        public User()
+        {
+            _fullname = $"{Firstname} {Lastname}";
+        }
 
     }
 }
