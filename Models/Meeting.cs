@@ -16,7 +16,7 @@ namespace Meeting_Minutes.Models
 
         [Required]
         [Display(Name ="Created by")]
-        public string? CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
         //[ForeignKey("CreatedBy")]
        // public virtual User User { get; set; }
 
