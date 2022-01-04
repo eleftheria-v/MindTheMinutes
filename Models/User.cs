@@ -14,7 +14,7 @@ namespace Meeting_Minutes.Models
         public string Firstname { get; set; }
 
         [Required(ErrorMessage = "Please enter your last name.")]
-        [Display(Name = "Lirst name")]
+        [Display(Name = "Last name")]
         [StringLength(50)]
         public string Lastname { get; set; }
 
