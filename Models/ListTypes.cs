@@ -2,7 +2,7 @@
 
 namespace Meeting_Minutes.Models
 {
-    public class ListTypes
+    public class ListType
     {
         [Key]
         public int ID { get; set; }

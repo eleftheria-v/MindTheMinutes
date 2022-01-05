@@ -2,7 +2,7 @@
 
 namespace Meeting_Minutes.Models
 {
-	public class MeetingsParticipants
+	public class MeetingParticipant
 	{
 		[Key]
 		[Required]
