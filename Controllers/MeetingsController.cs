@@ -26,6 +26,36 @@ namespace Meeting_Minutes.Controllers
             return View(await _context.Meetings.ToListAsync());
         }
 
+        //// GET: Meetings/ShowSearchForm
+        //public async Task<IActionResult> ShowSearchForm()
+        //{
+        //    return View();
+        //}
+
+
+        // POST: Meetings/ShowSearchResults
+        public async Task<IActionResult> ShowSearchResults(string SearchPhrase)
+        {
+            if (String.IsNullOrEmpty(SearchPhrase))
+            {
+                return View("Index", await _context.Meetings.ToListAsync());
+
+            }
+            else
+            {
+                return View("Index", await _context.Meetings.Where(j => j.Title.Contains
+               (SearchPhrase)).ToListAsync());
+            }
+
+        }
+
+       
+        //public async Task<IActionResult> ShowDateSearchResults(DateTime startDate, DateTime endDate)
+        //{
+        //    return View("Index", await _context.Meetings.Where(j => j.MeetingDate<=(startDate) &&( j => j.MeetingDate>=(endDate))).ToListAsync());
+
+        //}
+
         // GET: Meetings/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -61,7 +91,9 @@ namespace Meeting_Minutes.Controllers
             {
                 _context.Add(meeting);
                 await _context.SaveChangesAsync();
+                TempData["success"] = "Meeting created successfully";
                 return RedirectToAction(nameof(Index));
+
             }
             return View(meeting);
         }
@@ -100,6 +132,7 @@ namespace Meeting_Minutes.Controllers
                 {
                     _context.Update(meeting);
                     await _context.SaveChangesAsync();
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -112,6 +145,8 @@ namespace Meeting_Minutes.Controllers
                         throw;
                     }
                 }
+                TempData["success"] = "Meeting updated successfully";
+
                 return RedirectToAction(nameof(Index));
             }
             return View(meeting);
@@ -143,6 +178,8 @@ namespace Meeting_Minutes.Controllers
             var meeting = await _context.Meetings.FindAsync(id);
             _context.Meetings.Remove(meeting);
             await _context.SaveChangesAsync();
+            TempData["success"] = "Meeting deleted successfully";
+
             return RedirectToAction(nameof(Index));
         }
 
