@@ -91,8 +91,6 @@ namespace Meeting_Minutes.Controllers
                 return NotFound();
             }
 
-            var meet = 
-
             var meeting = await _context.Meetings.FindAsync(id);
             if (meeting == null)
             {
