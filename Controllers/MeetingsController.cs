@@ -8,22 +8,39 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Meeting_Minutes.Data;
 using Meeting_Minutes.Models;
+using Meeting_Minutes.Services;
 
 namespace Meeting_Minutes.Controllers
 {
     public class MeetingsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private IMeetingService _meetingService;
 
-        public MeetingsController(ApplicationDbContext context)
+        //Constructor
+        public MeetingsController(ApplicationDbContext context, IMeetingService meetingService)
         {
             _context = context;
+            _meetingService = meetingService;
         }
 
         // GET: Meetings
         public async Task<IActionResult> Index()
         {
             return View(await _context.Meetings.ToListAsync());
+        }
+
+        //GET: Details by title
+        public IActionResult Details(string title)
+        {
+            if (string.IsNullOrEmpty(title))
+            {
+                return NotFound();
+            }
+
+            var meeting = _meetingService.Search(title);
+
+            return View(meeting);
         }
 
         // GET: Meetings/Details/5
