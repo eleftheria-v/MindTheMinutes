@@ -21,6 +21,7 @@ namespace Meeting_Minutes.Data
         public DbSet<ListType> ListTypes { get; set; }
     
         public DbSet<FollowUp> FollowUps { get; set; }
+        public object Tables { get; internal set; }
         //public DbSet<ErrorViewModel> ErrorViewModels { get; set; }
 
 

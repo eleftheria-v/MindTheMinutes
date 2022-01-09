@@ -4,6 +4,7 @@ using Meeting_Minutes.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Meeting_Minutes.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220107122936_FK_3")]
+    partial class FK_3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,12 +35,10 @@ namespace Meeting_Minutes.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MeetingItemId")
+                    b.Property<int>("ItemId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MeetingItemId");
 
                     b.ToTable("FollowUps");
                 });
@@ -104,9 +104,6 @@ namespace Meeting_Minutes.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ListValuesID")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("MeetingDate")
                         .HasColumnType("datetime2");
 
@@ -118,8 +115,6 @@ namespace Meeting_Minutes.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ListValuesID");
 
                     b.ToTable("Meetings");
                 });
@@ -173,8 +168,6 @@ namespace Meeting_Minutes.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MeetingId");
-
                     b.ToTable("MeetingItems");
                 });
 
@@ -193,8 +186,6 @@ namespace Meeting_Minutes.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MeetingId");
 
                     b.ToTable("MeetingsParticipants");
                 });
@@ -275,17 +266,6 @@ namespace Meeting_Minutes.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Meeting_Minutes.Models.FollowUp", b =>
-                {
-                    b.HasOne("Meeting_Minutes.Models.MeetingItem", "MeetingItem")
-                        .WithMany()
-                        .HasForeignKey("MeetingItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MeetingItem");
-                });
-
             modelBuilder.Entity("Meeting_Minutes.Models.ListValue", b =>
                 {
                     b.HasOne("Meeting_Minutes.Models.ListType", "ListType")
@@ -295,39 +275,6 @@ namespace Meeting_Minutes.Migrations
                         .IsRequired();
 
                     b.Navigation("ListType");
-                });
-
-            modelBuilder.Entity("Meeting_Minutes.Models.Meeting", b =>
-                {
-                    b.HasOne("Meeting_Minutes.Models.ListValue", "ListValue")
-                        .WithMany()
-                        .HasForeignKey("ListValuesID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ListValue");
-                });
-
-            modelBuilder.Entity("Meeting_Minutes.Models.MeetingItem", b =>
-                {
-                    b.HasOne("Meeting_Minutes.Models.Meeting", "Meeting")
-                        .WithMany()
-                        .HasForeignKey("MeetingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Meeting");
-                });
-
-            modelBuilder.Entity("Meeting_Minutes.Models.MeetingParticipant", b =>
-                {
-                    b.HasOne("Meeting_Minutes.Models.Meeting", "Meeting")
-                        .WithMany()
-                        .HasForeignKey("MeetingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Meeting");
                 });
 #pragma warning restore 612, 618
         }

@@ -8,8 +8,9 @@ namespace Meeting_Minutes.Models
         [Key]
         public int Id { get; set; } //The primary key of this item
 
-        [Required]
-        public int MeetingId { get; set; }  //Foreign key to the Meetings Table to relate the record with the meeting
+       
+        public virtual Meeting Meeting { get; set; } 
+        //Foreign key to the Meetings Table to relate the record with the meeting
 
         [Required]
         public string Description { get; set; } //A description for the meeting item

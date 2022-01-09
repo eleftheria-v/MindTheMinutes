@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Meeting_Minutes.Data;
 using Meeting_Minutes.Models;
+using System.Data;
 
 namespace Meeting_Minutes.Controllers
 {
@@ -47,6 +48,16 @@ namespace Meeting_Minutes.Controllers
         // GET: Meetings/Create
         public IActionResult Create()
         {
+            IEnumerable<SelectListItem> TypeDropDown = _context.ListValues.Where(i => i.ListTypeID == 2).Select(i => new SelectListItem
+            {
+                Text = i.Value,
+                Value = i.ID.ToString()
+
+            });
+
+            ViewBag.TypeDropDown = TypeDropDown;
+            
+            
             return View();
         }
 
@@ -55,7 +66,7 @@ namespace Meeting_Minutes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CreatedDate,CreatedBy,DateUpdated,MeetingDate,Title,ExternalParticipants")] Meeting meeting)
+        public async Task<IActionResult> Create([Bind("Id,CreatedDate,CreatedBy,DateUpdated,MeetingDate,Status,Title,ExternalParticipants")] Meeting meeting)
         {
             if (ModelState.IsValid)
             {

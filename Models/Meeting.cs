@@ -31,11 +31,12 @@ namespace Meeting_Minutes.Models
         [Display(Name ="Meeting Date/Time")]
         public DateTime MeetingDate { get; set; } // The date and time when the meeting will take place
 
-        /*A status indicating the state of the 
-        meeting.The transitions are New → Started → Finished / Cancelled.A “Finished” or 
-        “Cancelled” meeting cannot revert to the “New” or “Started” state */
-        public MeetingStatus Status { get; set; }
+        ///*A status indicating the state of the 
+        //meeting.The transitions are New → Started → Finished / Cancelled.A “Finished” or 
+        //“Cancelled” meeting cannot revert to the “New” or “Started” state */
 
+        public int Status { get; set; }
+     
 
         [Required]
         public string Title { get; set; }  //The title of the meeting  

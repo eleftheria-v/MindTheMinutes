@@ -33,7 +33,12 @@
                 <input asp-for="MeetingDate" class="form-control" />
                 <span asp-validation-for="MeetingDate" class="text-danger"></span>
             </div>
-           
+           <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" asp-items="@ViewBag.TypeDropDown" class="form-control" >
+                <option value=” “>Status</option> </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />

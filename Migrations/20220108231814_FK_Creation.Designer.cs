@@ -4,6 +4,7 @@ using Meeting_Minutes.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Meeting_Minutes.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220108231814_FK_Creation")]
+    partial class FK_Creation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,9 +106,6 @@ namespace Meeting_Minutes.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ListValuesID")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("MeetingDate")
                         .HasColumnType("datetime2");
 
@@ -118,8 +117,6 @@ namespace Meeting_Minutes.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ListValuesID");
 
                     b.ToTable("Meetings");
                 });
@@ -295,17 +292,6 @@ namespace Meeting_Minutes.Migrations
                         .IsRequired();
 
                     b.Navigation("ListType");
-                });
-
-            modelBuilder.Entity("Meeting_Minutes.Models.Meeting", b =>
-                {
-                    b.HasOne("Meeting_Minutes.Models.ListValue", "ListValue")
-                        .WithMany()
-                        .HasForeignKey("ListValuesID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ListValue");
                 });
 
             modelBuilder.Entity("Meeting_Minutes.Models.MeetingItem", b =>
