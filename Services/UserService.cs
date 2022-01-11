@@ -13,30 +13,35 @@ namespace Meeting_Minutes.Services
         }
 
 
-        public User Create()
+        public IQueryable<ApplicationUser> Search(string email)
         {
+            if (email == null)
+            {
+                return null;
+            }
+            var users = _context.Users.Where(u => u.Email == email).AsQueryable();
 
-            return null;
+            return users;
         }
 
-        public IQueryable<User> Search()
+        public ApplicationUser GetById(string id)
         {
-            return null;
+            if (id == null)
+            {
+                return null;
+            }
+            var user = _context.Users.FirstOrDefault(u => u.Id == id);
+            return user;
         }
+
 
         public void Delete (int id)
         {
             
         }
 
-        public IEnumerable<User> GetAll()
+        public IEnumerable<ApplicationUser> GetAll()
         {
-            return null;
-        }
-
-        public User GetById(int id)
-        {
-            
             return null;
         }
 
@@ -44,6 +49,8 @@ namespace Meeting_Minutes.Services
         {
             return false;
         }
+
+
 
 
     }

@@ -1,4 +1,7 @@
 ﻿using Meeting_Minutes.Models;
+using Meeting_Minutes.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+//using Meeting_Minutes.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

@@ -1,8 +1,10 @@
 ﻿using Meeting_Minutes.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Meeting_Minutes.Controllers
 {
+    [Authorize]
     public class HistoryController : Controller
     {
         private readonly ApplicationDbContext _context;

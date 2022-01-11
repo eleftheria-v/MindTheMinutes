@@ -1,13 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace Meeting_Minutes.Models
 
 {
-    public class User 
+    public class ApplicationUser : IdentityUser
     {
-        [Key]
-        public int Id { get; set; }
-
+        
         [Required (ErrorMessage = "Please enter your first name.")]
         [Display(Name = "First name")]
         [StringLength(50)]
@@ -18,14 +17,14 @@ namespace Meeting_Minutes.Models
         [StringLength(50)]
         public string Lastname { get; set; }
 
-        [Required(ErrorMessage = "Please enter a valid username.")]
-        [StringLength(50)]
-        public string Username { get; set; }
+        //[Required(ErrorMessage = "Please enter a valid username.")]
+        //[StringLength(50)]
+        //public string Username { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
+        //[Required]
+        //[StringLength(50)]
+        //[DataType(DataType.EmailAddress)]
+        //public string Email { get; set; }
 
         [Required(ErrorMessage = "Please enter a valid phone number.")]
         [StringLength(25)]
@@ -35,7 +34,7 @@ namespace Meeting_Minutes.Models
 
         private readonly string _fullname;
 
-        public User()
+        public ApplicationUser()
         {
             _fullname = $"{Firstname} {Lastname}";
         }
