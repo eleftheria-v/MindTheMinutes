@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Meeting_Minutes.Migrations
 {
-    public partial class InitialIdentity : Migration
+    public partial class MeetingMinutesDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
