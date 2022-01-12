@@ -31,19 +31,19 @@ namespace Meeting_Minutes.Controllers
         }
 
         //GET: Details by title
-        public IActionResult Details(string title)
-        {
-            if (string.IsNullOrEmpty(title))
-            {
-                return NotFound();
-            }
+        //public IActionResult Details(string title)
+        //{
+        //    if (string.IsNullOrEmpty(title))
+        //    {
+        //        return NotFound();
+        //    }
 
-            var meeting = _meetingService.Search(title);
+        //    var meeting = _meetingService.Search(title);
 
-            return View(meeting);
-        }
+        //    return View(meeting);
+        //}
 
-        // GET: Meetings/Details/5
+        //GET: Meetings/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)

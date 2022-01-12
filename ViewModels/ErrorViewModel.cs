@@ -1,4 +1,4 @@
-namespace Meeting_Minutes.Models
+namespace Meeting_Minutes.Models.ViewModels
 {
     public class ErrorViewModel
     {

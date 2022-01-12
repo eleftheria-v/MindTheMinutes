@@ -1,9 +1,10 @@
 ﻿using Meeting_Minutes.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Meeting_Minutes.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -11,7 +12,7 @@ namespace Meeting_Minutes.Data
         }
 
         public DbSet<Meeting> Meetings { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<RiskLevel> RiskLevels { get; set; }
         public DbSet<Organisation> Organisations { get; set; }
 
