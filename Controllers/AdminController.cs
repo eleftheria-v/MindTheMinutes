@@ -33,6 +33,77 @@ namespace Meeting_Minutes.Controllers
         }
 
         [HttpGet]
+        public IActionResult ListUsers()
+        {
+            var users = _userManager.Users;
+            return View(users);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with ID: {id} cannot be found.";
+                return View("NotFound");
+            }
+
+            var model = new EditUserViewModel
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FirstName = user.Firstname,
+                Lastname = user.Lastname,
+                Roles = roles
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(EditUserViewModel model)
+        {
+            
+            if (!ModelState.IsValid)
+            {
+                ViewBag.ErrorMessage = $"Model state for user {model.Email} was not valid.";
+                return View("NotFound");
+            }
+
+            var user = await _userManager.FindByIdAsync(model.Id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with ID: {model.Id} cannot be found.";
+                return View("NotFound");
+            }
+            else 
+            {
+                user.Email = model.Email;
+                user.UserName = model.UserName;
+                user.Firstname = model.FirstName;
+                user.Lastname = model.Lastname;
+            }
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("ListUsers");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            return View(model);
+        }
+
+        [HttpGet]
         public IActionResult CreateRole()
         {
             return View();
