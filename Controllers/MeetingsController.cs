@@ -25,12 +25,9 @@ namespace Meeting_Minutes.Controllers
         {
             return View(await _context.Meetings.ToListAsync());
         }
+      
 
-        //// GET: Meetings/ShowSearchForm
-        //public async Task<IActionResult> ShowSearchForm()
-        //{
-        //    return View();
-        //}
+  
 
 
         // POST: Meetings/ShowSearchResults
@@ -49,12 +46,34 @@ namespace Meeting_Minutes.Controllers
 
         }
 
-       
-        //public async Task<IActionResult> ShowDateSearchResults(DateTime startDate, DateTime endDate)
-        //{
-        //    return View("Index", await _context.Meetings.Where(j => j.MeetingDate<=(startDate) &&( j => j.MeetingDate>=(endDate))).ToListAsync());
 
-        //}
+        public async Task<IActionResult> ShowDateSearchResults(DateTime? dateFrom, DateTime? dateTo)
+
+   
+
+        {
+            if (dateFrom.HasValue && dateTo.HasValue)
+            { return View("Index", await _context.Meetings.Where(j => j.MeetingDate >= dateFrom && j.MeetingDate <= dateTo).ToListAsync());
+
+            } 
+            else if(dateFrom.HasValue)
+            {
+                return View("Index", await _context.Meetings.Where(j => j.MeetingDate >= dateFrom).ToListAsync());
+
+            }
+            else if (dateTo.HasValue)
+            {
+                return View("Index", await _context.Meetings.Where(j => j.MeetingDate <= dateTo).ToListAsync());
+
+            }
+            else
+            {
+                return View();
+            }
+           
+
+        }
+
 
         // GET: Meetings/Details/5
         public async Task<IActionResult> Details(int? id)
