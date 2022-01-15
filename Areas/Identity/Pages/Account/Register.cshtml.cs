@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 
 namespace Meeting_Minutes.Areas.Identity.Pages.Account
 {
@@ -172,6 +173,14 @@ namespace Meeting_Minutes.Areas.Identity.Pages.Account
                     }
                     else
                     {
+                        ClaimsPrincipal principal = HttpContext.User as ClaimsPrincipal;
+                        var isUserSignedIn = _signInManager.IsSignedIn(principal);
+
+                        if (isUserSignedIn)
+                        {
+                            return RedirectToAction("ListUsers", "Admin");
+                        }
+
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
