@@ -8,20 +8,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Meeting_Minutes.Data;
 using Meeting_Minutes.Models;
-using Meeting_Minutes.Services;
 
 namespace Meeting_Minutes.Controllers
 {
     public class MeetingsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private IMeetingService _meetingService;
 
-        //Constructor
-        public MeetingsController(ApplicationDbContext context, IMeetingService meetingService)
+        public MeetingsController(ApplicationDbContext context)
         {
             _context = context;
-            _meetingService = meetingService;
         }
 
         // GET: Meetings
@@ -30,20 +26,117 @@ namespace Meeting_Minutes.Controllers
             return View(await _context.Meetings.ToListAsync());
         }
 
-        //GET: Details by title
-        //public IActionResult Details(string title)
-        //{
-        //    if (string.IsNullOrEmpty(title))
+
+
+
+
+        // POST: Meetings/ShowSearchResults
+        [HttpPost]
+        public async Task<IActionResult> ShowSearchResults(string SearchPhrase, DateTime? dateFrom, DateTime? dateTo)
+        {
+            if (!String.IsNullOrEmpty(SearchPhrase) && dateFrom.HasValue && dateTo.HasValue)
+            {
+                var meetings = await _context.Meetings.Where(j => j.MeetingDate >= dateFrom && j.MeetingDate <= dateTo).ToListAsync();
+                meetings = meetings.Where(m => m.Title.Contains(SearchPhrase)).ToList();
+                return View("Index", meetings);// await _context.Meetings.Where(j => j.MeetingDate >= dateFrom && j.MeetingDate <= dateTo && j.Title == SearchPhrase).ToListAsync());
+
+            } else if (String.IsNullOrEmpty(SearchPhrase) && dateFrom.HasValue && dateTo.HasValue)
+            {
+                var meetings = await _context.Meetings.Where(j => j.MeetingDate >= dateFrom && j.MeetingDate <= dateTo).ToListAsync();
+                return View("Index", meetings);
+            } else if (!String.IsNullOrEmpty(SearchPhrase) && (dateFrom.HasValue || dateTo.HasValue))
+            {
+                if (dateFrom.HasValue)
+                {
+                    var meetings = await _context.Meetings.Where(j => j.MeetingDate >= dateFrom).ToListAsync();
+                    meetings = meetings.Where(m => m.Title.Contains(SearchPhrase)).ToList();
+                    return View("Index", meetings);
+
+                }
+                else
+                {
+                    var meetings = await _context.Meetings.Where(j => j.MeetingDate <= dateTo).ToListAsync();
+                    meetings = meetings.Where(m => m.Title.Contains(SearchPhrase)).ToList();
+                    return View("Index", meetings);
+
+                }
+            }
+            else if (dateFrom.HasValue)
+            {
+                return View("Index", await _context.Meetings.Where(j => j.MeetingDate >= dateFrom).ToListAsync());
+
+            }
+            else if (dateTo.HasValue)
+            {
+                return View("Index", await _context.Meetings.Where(j => j.MeetingDate <= dateTo).ToListAsync());
+
+            }
+            else
+            {
+                var meetings = _context.Meetings.Where(m => m.Title.Contains(SearchPhrase)).ToList();
+                return View("Index", meetings);
+            }
+                    //ViewBag.Message = "No Meetings found with the search fields"
+                
+
+        }
+            //else
+            //{
+            //    return View("Index", await _context.Meetings.Where(j => j.Title.Contains
+            //   (SearchPhrase)).ToListAsync());
+            //}
+        //    else if (dateFrom.HasValue && dateTo.HasValue)
         //    {
-        //        return NotFound();
+        //        return View("Index", await _context.Meetings.Where(j => j.MeetingDate >= dateFrom && j.MeetingDate <= dateTo).ToListAsync());
+
+        //    }
+        //    else if (dateFrom.HasValue)
+        //    {
+        //        return View("Index", await _context.Meetings.Where(j => j.MeetingDate >= dateFrom).ToListAsync());
+
+        //    }
+        //    else if (dateTo.HasValue)
+        //    {
+        //        return View("Index", await _context.Meetings.Where(j => j.MeetingDate <= dateTo).ToListAsync());
+
+        //    }
+        //    else
+        //    {
+        //        return View();
         //    }
 
-        //    var meeting = _meetingService.Search(title);
-
-        //    return View(meeting);
         //}
 
-        //GET: Meetings/Details/5
+
+        //public async Task<IActionResult> ShowDateSearchResults(DateTime? dateFrom, DateTime? dateTo)
+
+   
+
+        //{
+        //    if (dateFrom.HasValue && dateTo.HasValue)
+        //    { return View("Index", await _context.Meetings.Where(j => j.MeetingDate >= dateFrom && j.MeetingDate <= dateTo).ToListAsync());
+
+        //    } 
+        //    else if(dateFrom.HasValue)
+        //    {
+        //        return View("Index", await _context.Meetings.Where(j => j.MeetingDate >= dateFrom).ToListAsync());
+
+        //    }
+        //    else if (dateTo.HasValue)
+        //    {
+        //        return View("Index", await _context.Meetings.Where(j => j.MeetingDate <= dateTo).ToListAsync());
+
+        //    }
+        //    else
+        //    {
+        //        return View();
+        //    }
+           
+
+        //}
+
+
+        // GET: Meetings/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -78,7 +171,9 @@ namespace Meeting_Minutes.Controllers
             {
                 _context.Add(meeting);
                 await _context.SaveChangesAsync();
+                TempData["success"] = "Meeting created successfully";
                 return RedirectToAction(nameof(Index));
+
             }
             return View(meeting);
         }
@@ -117,6 +212,7 @@ namespace Meeting_Minutes.Controllers
                 {
                     _context.Update(meeting);
                     await _context.SaveChangesAsync();
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -129,6 +225,8 @@ namespace Meeting_Minutes.Controllers
                         throw;
                     }
                 }
+                TempData["success"] = "Meeting updated successfully";
+
                 return RedirectToAction(nameof(Index));
             }
             return View(meeting);
@@ -160,6 +258,8 @@ namespace Meeting_Minutes.Controllers
             var meeting = await _context.Meetings.FindAsync(id);
             _context.Meetings.Remove(meeting);
             await _context.SaveChangesAsync();
+            TempData["success"] = "Meeting deleted successfully";
+
             return RedirectToAction(nameof(Index));
         }
 
