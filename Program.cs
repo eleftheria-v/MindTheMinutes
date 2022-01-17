@@ -1,6 +1,7 @@
 using Meeting_Minutes.Data;
 using Meeting_Minutes.Models;
 using Meeting_Minutes.Services;
+using Meeting_Minutes.Services.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -18,6 +19,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMeetingService, MeetingService>();
+builder.Services.AddScoped<IMailService, MailService>();
 
 builder.Services.Configure<IdentityOptions>(opt =>
 {
