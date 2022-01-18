@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
 	ViewData["Title"] = "Home Page";
 }
 
@@ -8,4 +11,9 @@
 		<small class="text-muted">This application allows you to keep notes across calls and meetings, informs attendees and creates actional items.</small>
 	</h3>
 </div>
+@if (!SignInManager.IsSignedIn(User))
+{
+	<button type="button" class="btn btn-primary btn-lg"><a class="nav-link text-white" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a></button>
+	<button type="button" class="btn btn-primary btn-lg"><a class="nav-link text-white" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a></button>
+}
 
