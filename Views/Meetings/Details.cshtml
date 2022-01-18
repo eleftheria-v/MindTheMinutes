@@ -1,4 +1,4 @@
-﻿@model Meeting_Minutes.Models.Meeting
+@model Meeting_Minutes.Models.MeetingItemsViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -12,50 +12,221 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedDate)
+            @Html.DisplayNameFor(model => model.Meeting.CreatedDate)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedDate)
+            @Html.DisplayFor(model => model.Meeting.CreatedDate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedBy)
+            @Html.DisplayNameFor(model => model.Meeting.CreatedBy)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedBy)
+            @Html.DisplayFor(model => model.Meeting.CreatedBy)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateUpdated)
+            @Html.DisplayNameFor(model => model.Meeting.DateUpdated)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateUpdated)
+            @Html.DisplayFor(model => model.Meeting.DateUpdated)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MeetingDate)
+            @Html.DisplayNameFor(model => model.Meeting.MeetingDate)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MeetingDate)
+            @Html.DisplayFor(model => model.Meeting.MeetingDate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Status)
+            @Html.DisplayNameFor(model => model.Meeting.Status)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Status)
+            @Html.DisplayFor(model => model.Meeting.Status)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.Meeting.Title)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
+            @Html.DisplayFor(model => model.Meeting.Title)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ExternalParticipants)
+            @Html.DisplayNameFor(model => model.Meeting.ExternalParticipants)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ExternalParticipants)
+            @Html.DisplayFor(model => model.Meeting.ExternalParticipants)
         </dd>
     </dl>
 </div>
+
 <div>
+    <a asp-action="Edit" asp-route-id="@Model.Meeting?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a> |
+    <a asp-action="Index" asp-route-id="@Model.Meeting.Id" asp-controller="MeetingItems">Items</a> 
+</div>
+
+@*<div>
+   @Html.Partial("~/Views/Shared/_MeetingItems.cshtml")
+</div>
+*@
+
+@* ****************************************************************** *@
+
+
+@*
+@foreach (var meetingItem in Model.meetingItems){
+<div>
+    <h4>MeetingItem</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => meetingItem.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => meetingItem.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => meetingItem.Deadline)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => meetingItem.Deadline)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => meetingItem.AssignedTo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => meetingItem.AssignedTo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => meetingItem.RiskLevel)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => meetingItem.RiskLevel)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => meetingItem.RequestedBy)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => meetingItem.RequestedBy)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => meetingItem.ChangeRequested)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => meetingItem.ChangeRequested)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => meetingItem.VisibleInMinutes)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => meetingItem.VisibleInMinutes)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => meetingItem.FileAttachment)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => meetingItem.FileAttachment)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => meetingItem.FileName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => meetingItem.FileName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => meetingItem.FileType)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => meetingItem.FileType)
+        </dd>
+    </dl>
+</div>
+}*@
+@*<div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
+
+
+@* ****************************************************************** *@
+
+
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               Description @*@Html.DisplayNameFor(model => meetingItem.Description)*@
+            </th>
+            <th>
+               Deadline @*@Html.DisplayNameFor(model => meetingItem.Deadline)*@
+            </th>
+            <th>
+               Assigned To @*@Html.DisplayNameFor(model => meetingItem.AssignedTo)*@
+            </th>
+            <th>
+               Risk Level @*@Html.DisplayNameFor(model => meetingItem.RiskLevel)*@
+            </th>
+            <th>
+               Requested By  @*@Html.DisplayNameFor(model => meetingItem.RequestedBy)*@
+            </th>
+            <th>
+                Change Requestsd @*@Html.DisplayNameFor(model => meetingItem.ChangeRequested)*@
+            </th>
+            <th>
+                Visible In Minutes @*@Html.DisplayNameFor(model => meetingItem.VisibleInMinutes)*@
+            </th>
+            <th>
+                File Attachment @*@Html.DisplayNameFor(model => meetingItem.FileAttachment)*@
+            </th>
+     @*       <th>
+                @Html.DisplayNameFor(model => meetingItem.FileName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => meetingItem.FileType)
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var meetingItem in Model.meetingItems) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => meetingItem.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => meetingItem.Deadline)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => meetingItem.AssignedTo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => meetingItem.RiskLevel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => meetingItem.RequestedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => meetingItem.ChangeRequested)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => meetingItem.VisibleInMinutes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => meetingItem.FileAttachment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => meetingItem.FileName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => meetingItem.FileType)
+            </td>
+          @*  <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>*@
+        </tr>
+}
+    </tbody>
+</table>

@@ -16,35 +16,41 @@ namespace Meeting_Minutes.Controllers
 
         public IActionResult Index()
         {
-            var history = _context.Meetings.Where(u => u.MeetingDate<DateTime.Now).ToList();
+            var history = _context.Meetings.Where(u => u.MeetingDate < DateTime.Now).ToList();
             return View(history);
         }
         // POST: Meetings/ShowSearchResults
-        public async Task<IActionResult> ShowSearchResults(string SearchPhrase)
+        [HttpPost]
+        public async Task<IActionResult> ShowSearchResults(string SearchPhrase, DateTime? dateFrom, DateTime? dateTo)
         {
-            if (String.IsNullOrEmpty(SearchPhrase))
+            if (!String.IsNullOrEmpty(SearchPhrase) && dateFrom.HasValue && dateTo.HasValue)
             {
-                return View("Index", await _context.Meetings.ToListAsync());
+                var meetings = await _context.Meetings.Where(j => j.MeetingDate >= dateFrom && j.MeetingDate <= dateTo).ToListAsync();
+                meetings = meetings.Where(m => m.Title.Contains(SearchPhrase)).ToList();
+                return View("Index", meetings);// await _context.Meetings.Where(j => j.MeetingDate >= dateFrom && j.MeetingDate <= dateTo && j.Title == SearchPhrase).ToListAsync());
 
             }
-            else
+            else if (String.IsNullOrEmpty(SearchPhrase) && dateFrom.HasValue && dateTo.HasValue)
             {
-                return View("Index", await _context.Meetings.Where(j => j.Title.Contains
-               (SearchPhrase)).ToListAsync());
+                var meetings = await _context.Meetings.Where(j => j.MeetingDate >= dateFrom && j.MeetingDate <= dateTo).ToListAsync();
+                return View("Index", meetings);
             }
-
-        }
-
-
-        public async Task<IActionResult> ShowDateSearchResults(DateTime? dateFrom, DateTime? dateTo)
-
-
-
-        {
-            if (dateFrom.HasValue && dateTo.HasValue)
+            else if (!String.IsNullOrEmpty(SearchPhrase) && (dateFrom.HasValue || dateTo.HasValue))
             {
-                return View("Index", await _context.Meetings.Where(j => j.MeetingDate >= dateFrom && j.MeetingDate <= dateTo).ToListAsync());
+                if (dateFrom.HasValue)
+                {
+                    var meetings = await _context.Meetings.Where(j => j.MeetingDate >= dateFrom).ToListAsync();
+                    meetings = meetings.Where(m => m.Title.Contains(SearchPhrase)).ToList();
+                    return View("Index", meetings);
 
+                }
+                else
+                {
+                    var meetings = await _context.Meetings.Where(j => j.MeetingDate <= dateTo).ToListAsync();
+                    meetings = meetings.Where(m => m.Title.Contains(SearchPhrase)).ToList();
+                    return View("Index", meetings);
+
+                }
             }
             else if (dateFrom.HasValue)
             {
@@ -58,11 +64,9 @@ namespace Meeting_Minutes.Controllers
             }
             else
             {
-                return View();
+                var meetings = _context.Meetings.Where(m => m.Title.Contains(SearchPhrase)).ToList();
+                return View("Index", meetings);
             }
-
-
         }
-
     }
 }
