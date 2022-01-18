@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Meeting_Minutes.Data;
 using Meeting_Minutes.Models;
 using Microsoft.AspNetCore.Authorization;
+using Meeting_Minutes.Services.IServices;
+using MimeKit;
 
 namespace Meeting_Minutes.Controllers
 {
@@ -16,10 +18,12 @@ namespace Meeting_Minutes.Controllers
     public class MeetingsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private IMailService _mailService; 
 
-        public MeetingsController(ApplicationDbContext context)
+        public MeetingsController(ApplicationDbContext context, IMailService mailservice)
         {
             _context = context;
+            _mailService = mailservice;
         }
 
         // GET: Meetings
@@ -220,6 +224,24 @@ namespace Meeting_Minutes.Controllers
             private bool MeetingExists(int id)
             {
                 return _context.Meetings.Any(e => e.Id == id);
+            }
+
+
+
+            public IActionResult SendMail (int id)
+            {
+                var meeting = _context.Meetings.FirstOrDefault(m => m.Id == id);
+
+                var meetingParticipants = _context.MeetingsParticipants.Where(m => m.MeetingId == id).Select(s => s.Participant).ToList();
+                
+
+                var mail = new MimeMessage();
+
+
+                _mailService.sendMail(mail,meetingParticipants);
+
+                TempData["success"] = "Notification Mail sended successfully";
+                return RedirectToAction("Index");
             }
         }
     }

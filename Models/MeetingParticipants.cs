@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Meeting_Minutes.Models
 {
@@ -9,9 +10,10 @@ namespace Meeting_Minutes.Models
 		public int Id { get; set; }
 
 		[Required]
+		[ForeignKey("Meeting")]
 		public int MeetingId { get; set; }
 
 		[Required]
-		public Guid ParticipantsId { get; set; }
+		public string Participant { get; set; }
 	}
 }
