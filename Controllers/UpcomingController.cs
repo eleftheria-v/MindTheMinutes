@@ -1,9 +1,11 @@
 ﻿using Meeting_Minutes.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Meeting_Minutes.Controllers
 {
+    [Authorize]
     public class UpcomingController : Controller
     {
         private readonly ApplicationDbContext _context;
