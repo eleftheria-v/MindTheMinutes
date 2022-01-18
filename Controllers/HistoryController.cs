@@ -68,5 +68,24 @@ namespace Meeting_Minutes.Controllers
                 return View("Index", meetings);
             }
         }
+
+
+        // GET: Meetings/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var meeting = await _context.Meetings
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (meeting == null)
+            {
+                return NotFound();
+            }
+
+            return View(meeting);
+        }
     }
 }

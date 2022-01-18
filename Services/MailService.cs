@@ -31,7 +31,8 @@ namespace Meeting_Minutes.Services
 
             using (var smtp = new SmtpClient()) 
             {
-                smtp.Connect(smtpServer, smtpPort, false);
+                smtp.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                smtp.Connect(smtpServer, smtpPort, SecureSocketOptions.Auto);
                 smtp.Authenticate(smtpUsername, smtpPass);
                 smtp.Send(mail);
                 smtp.Disconnect(true);
