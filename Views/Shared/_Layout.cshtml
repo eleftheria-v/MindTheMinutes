@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="~/lib\bootstrap\dist\css\_bootswatch.scss" />
 	<link rel="stylesheet" href="~/lib\bootstrap\dist\css\_variables.scss" />
 	<link rel="stylesheet" href="~/lib\bootstrap\dist\css\bootstrap-grid.min.css" />
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/Meeting_Minutes.styles.css" asp-append-version="true" />
 </head>
@@ -52,9 +53,11 @@
 				</div>
 			</nav>
 		}
+
 	</header>
 	<div class="container">
 		<main role="main" class="pb-3">
+			<partial name="_Notification" />
 			@RenderBody()
 			@*               @if (!SignInManager.IsSignedIn(User))
 				{
