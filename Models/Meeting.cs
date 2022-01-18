@@ -8,6 +8,7 @@ namespace Meeting_Minutes.Models
     {   [Key]
         public int Id { get; set; } // The primary key of the meeting
         [Required]
+        [Display(Name = "Created Date")]
         public DateTime CreatedDate { get; set; } = DateTime.Now; //The date when the record was created
 
         //The full name of the user that created the meeting.
@@ -15,7 +16,7 @@ namespace Meeting_Minutes.Models
         */
 
         [Required]
-        [Display(Name ="Created by")]
+        [Display(Name ="Organizer")]
         public string CreatedBy { get; set; }
         //[ForeignKey("CreatedBy")]
        // public virtual User User { get; set; }
@@ -28,7 +29,7 @@ namespace Meeting_Minutes.Models
         public DateTime DateUpdated { get; set; }
 
         [Required]
-        [Display(Name ="Meeting Date/Time")]
+        [Display(Name ="Date & Time")]
         public DateTime MeetingDate { get; set; } // The date and time when the meeting will take place
 
         /*A status indicating the state of the 
@@ -41,6 +42,7 @@ namespace Meeting_Minutes.Models
         public string Title { get; set; }  //The title of the meeting  
 
         [Required]
+        [Display(Name = "External Participants")]
         public string ExternalParticipants { get; set; } // A comma-separated string, keeping the mails of external(not registered in the system) participants.
     }
 }
