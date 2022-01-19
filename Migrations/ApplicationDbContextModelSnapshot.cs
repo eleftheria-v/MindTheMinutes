@@ -255,8 +255,9 @@ namespace Meeting_Minutes.Migrations
                     b.Property<int>("MeetingId")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ParticipantsId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Participant")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

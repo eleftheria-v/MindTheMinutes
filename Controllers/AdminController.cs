@@ -17,7 +17,7 @@ namespace Meeting_Minutes.Controllers
         private IUserService _userService;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        
+
         public AdminController(ApplicationDbContext context, IUserService userService, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
@@ -66,7 +66,7 @@ namespace Meeting_Minutes.Controllers
         [HttpPost]
         public async Task<IActionResult> EditUser(EditUserViewModel model)
         {
-            
+
             if (!ModelState.IsValid)
             {
                 ViewBag.ErrorMessage = $"Model state for user {model.Email} was not valid.";
@@ -80,7 +80,7 @@ namespace Meeting_Minutes.Controllers
                 ViewBag.ErrorMessage = $"User with ID: {model.Id} cannot be found.";
                 return View("NotFound");
             }
-            else 
+            else
             {
                 user.Email = model.Email;
                 user.UserName = model.UserName;
@@ -101,6 +101,37 @@ namespace Meeting_Minutes.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                ViewBag.Message = $"User with ID: {id} was not found.";
+                return View("NotFound");
+            }
+            else
+            {
+                var result = await _userManager.DeleteAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListUsers");
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+
+                }
+            }
+
+            return View("ListUsers");
         }
 
         [HttpGet]

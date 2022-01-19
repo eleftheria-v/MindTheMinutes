@@ -23,8 +23,8 @@ namespace Meeting_Minutes.Controllers
 
         public IActionResult Index()
         {   
-            MimeMessage message = new MimeMessage();
-            _mailService.sendMail(message);
+            //MimeMessage message = new MimeMessage();
+            //_mailService.sendMail(message);
             return View();
         }
 

@@ -20,14 +20,19 @@ namespace Meeting_Minutes.Services
         string msg ="test";
         //message.Body = ("")
 
-        public void sendMail(MimeMessage message)
+        public void sendMail(MimeMessage message, List<String> participants)
         {
             var mail = new MimeMessage();
             mail.Sender = new MailboxAddress(SenderName, SenderEmail);
             
             mail.Subject = "test Subject";
             mail.Body = new TextPart(TextFormat.Html) { Text = msg.ToString()};
-            mail.To.Add(new MailboxAddress("test", SenderEmail));
+
+            foreach (var address in participants)
+            {
+                mail.To.Add(new MailboxAddress("",address));
+            }
+            
 
             using (var smtp = new SmtpClient()) 
             {
