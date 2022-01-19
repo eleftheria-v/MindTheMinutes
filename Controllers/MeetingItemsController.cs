@@ -8,16 +8,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Meeting_Minutes.Data;
 using Meeting_Minutes.Models;
+using Meeting_Minutes.Models.ViewModels;
+using System.Diagnostics;
 
 namespace Meeting_Minutes.Controllers
 {
     public class MeetingItemsController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public MeetingItemsController(ApplicationDbContext context)
+        private readonly IWebHostEnvironment _environment;
+        public MeetingItemsController(ApplicationDbContext context,IWebHostEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
 
         // GET: MeetingItems
@@ -68,16 +71,54 @@ namespace Meeting_Minutes.Controllers
         // POST: 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MeetingId,Description,Deadline,AssignedTo,RiskLevel,RequestedBy,ChangeRequested,VisibleInMinutes,FileAttachment,FileName,FileType")] MeetingItem meetingItem, int id)
+        public async Task<IActionResult> Create([Bind("MeetingId,Description,Deadline,AssignedTo,RiskLevel,RequestedBy,ChangeRequested,VisibleInMinutes,FileAttachment,FileName,FileType,FileList")] MeetingItem meetingItem, int id)
         {
             if (ModelState.IsValid)
             {
-                meetingItem.MeetingId = id;
+                try
+                {
+                    //Add Guid
+                    var addGuid = Convert.ToString(Guid.NewGuid());
 
+                    if (meetingItem.FileList != null)
+                    {
+                        foreach (var formfile in meetingItem.FileList)
+                        {
+                            //save it with Guid + random name
+                            //nikos path string path = @$"{_environment.WebRootPath}\files\{string.Concat(addGuid, Path.GetRandomFileName())}.png";
+                            string path = @$"{_environment.WebRootPath}\files\ {string.Concat(addGuid, formfile.FileName)}";
+
+                            //The recommended way of saving the file is to save outside of the application folders. 
+                            //Because of security issues, if we save the files in the outside directory we can scan those folders
+                            //in background checks without affecting the application. 
+                            //string path = $"{_config["AppSettings:FileRootPath"]}/{string.Concat(addGuid, Path.GetRandomFileName())}.png";
+
+
+                            using var fileStream = new FileStream(path, FileMode.Create);
+                            await formfile.CopyToAsync(fileStream);
+                            meetingItem.FileName = formfile.FileName;
+                            meetingItem.FileAttachment = path;
+                            break;
+                        }
+                        
+                    }
+                    //return RedirectToAction(nameof(Index), "Meetings");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
+
+              
+                meetingItem.MeetingId = id;
                 _context.Add(meetingItem);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Details", "Meetings", new {id = id });
+                return RedirectToAction("Details", "Meetings", new { id = id });
             }
+
+
+            
             return View(meetingItem);
         }
 
@@ -102,13 +143,13 @@ namespace Meeting_Minutes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,MeetingId,Description,Deadline,AssignedTo,RiskLevel,RequestedBy,ChangeRequested,VisibleInMinutes,FileAttachment,FileName,FileType")] MeetingItem meetingItem)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,MeetingId,Description,Deadline,AssignedTo,RiskLevel,RequestedBy,ChangeRequested,VisibleInMinutes,FileAttachment,FileName,FileType")] MeetingItem meetingItem )
         {
             if (id != meetingItem.Id)
             {
                 return NotFound();
             }
-
+            
             if (ModelState.IsValid)
             {
                 try
@@ -165,5 +206,48 @@ namespace Meeting_Minutes.Controllers
         {
             return _context.MeetingItems.Any(e => e.Id == id);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadFile([FromForm] FileUpd files, int id)
+        {
+            try
+            {
+                //Add Guid
+                var addGuid = Convert.ToString(Guid.NewGuid());
+
+                if (files.FileList != null)
+                {
+                    foreach (var formfile in files.FileList)
+                    {
+                        //save it with Guid + random name
+                        //nikos path string path = @$"{_environment.WebRootPath}\files\{string.Concat(addGuid, Path.GetRandomFileName())}.png";
+                        string path = @$"{_environment.WebRootPath}\files\ {string.Concat(addGuid,formfile.FileName)}";
+                      
+                        //The recommended way of saving the file is to save outside of the application folders. 
+                        //Because of security issues, if we save the files in the outside directory we can scan those folders
+                        //in background checks without affecting the application. 
+                        //string path = $"{_config["AppSettings:FileRootPath"]}/{string.Concat(addGuid, Path.GetRandomFileName())}.png";
+
+
+                        using var fileStream = new FileStream(path, FileMode.Create);
+                        await formfile.CopyToAsync(fileStream);
+                    }
+                }
+                return RedirectToAction(nameof(Index), "Meetings");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
+
 }
