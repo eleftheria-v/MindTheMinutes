@@ -114,11 +114,12 @@ namespace Meeting_Minutes.Controllers
                 meetingItem.MeetingId = id;
                 _context.Add(meetingItem);
                 await _context.SaveChangesAsync();
+                TempData["success"] = "Meeting Item has been successfully Created";
                 return RedirectToAction("Details", "Meetings", new { id = id });
             }
 
 
-            
+            //TempData["error"] = "Meeting Item has been successfully Created";
             return View(meetingItem);
         }
 
