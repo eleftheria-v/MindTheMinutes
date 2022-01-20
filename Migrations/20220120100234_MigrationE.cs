@@ -4,7 +4,7 @@
 
 namespace Meeting_Minutes.Migrations
 {
-    public partial class initial : Migration
+    public partial class MigrationE : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

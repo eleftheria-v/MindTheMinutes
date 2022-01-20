@@ -1,7 +1,14 @@
-﻿using Meeting_Minutes.Data;
-using Microsoft.AspNetCore.Authorization;
+﻿#nullable disable
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Meeting_Minutes.Data;
+using Meeting_Minutes.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Meeting_Minutes.Controllers
 {
@@ -69,5 +76,32 @@ namespace Meeting_Minutes.Controllers
                 return View("Index", meetings);
             }
         }
+
+        // GET: Meetings/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var meeting = await _context.Meetings
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (meeting == null)
+            {
+                return NotFound();
+            }
+            //var meetingItems = await _context.MeetingItems
+            //.Where(i => i.MeetingId == id).ToListAsync();
+            //var model = new Meeting
+            //{
+            //    Meeting = meeting,
+            //    meetingItems = meetingItems
+            //};
+            return View(meeting);
+        }
+
     }
+
+
 }
