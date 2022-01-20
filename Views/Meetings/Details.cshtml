@@ -58,8 +58,7 @@
 
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Meeting?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a> |
-    <a asp-action="Index" asp-route-id="@Model.Meeting.Id" asp-controller="MeetingItems">Items</a> 
+    <a asp-action="Index">Back to List</a> 
 </div>
 
     <a asp-action="SendMail" asp-route-id="@Model.Meeting.Id" asp-controller="Meetings"> SendMailButtonPleasePressMe </a>
@@ -104,7 +103,7 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var meetingItem in Model.meetingItems) {
+     @foreach (var meetingItem in Model.meetingItems) {
         <tr>
           
             <td>
@@ -137,12 +136,9 @@
             <td>
                 @Html.DisplayFor(modelItem => meetingItem.FileType)
             </td>
-          @* 
             <td>
-                <a asp-action="Edit" asp-route-id="@meetingItem.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@meetingItem.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@meetingItem.Id">Delete</a>
-            </td>*@
+             <a asp-action="DownloadiCal" asp-route-id="@meetingItem.Id">Save .ics</a>
+             </td>
         </tr>
 }
     </tbody>

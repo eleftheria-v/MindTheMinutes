@@ -24,10 +24,10 @@ namespace Meeting_Minutes.Controllers
         }
 
         // GET: MeetingItems
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.MeetingItems.ToListAsync());
-        }
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _context.MeetingItems.ToListAsync());
+        //}
 
         // GET: MeetingItems/Details/5
         public async Task<IActionResult> Details(int? id)

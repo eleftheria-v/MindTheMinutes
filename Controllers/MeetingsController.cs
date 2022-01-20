@@ -11,6 +11,7 @@ using Meeting_Minutes.Models;
 using Microsoft.AspNetCore.Authorization;
 using Meeting_Minutes.Services.IServices;
 using MimeKit;
+using System.Text;
 
 namespace Meeting_Minutes.Controllers
 {
@@ -32,9 +33,61 @@ namespace Meeting_Minutes.Controllers
             return View(await _context.Meetings.ToListAsync());
         }
 
+        public FileResult DownloadiCal(int? id)
+        {
+            //Calendar MeetingItems
+            var meetingItems = _context.MeetingItems.FirstOrDefault(i => i.Id == id);
+        
+            StringBuilder sb = new StringBuilder();
+            string DateFormat = "yyyyMMddTHHmmssZ";
+            string now = DateTime.Now.ToUniversalTime().ToString(DateFormat);
+            sb.AppendLine("BEGIN:VCALENDAR");
+            sb.AppendLine("PRODID:-//Compnay Inc//Product Application//EN");
+            sb.AppendLine("VERSION:2.0");
+            sb.AppendLine("METHOD:PUBLISH");
+            DateTime dtEnd = Convert.ToDateTime(meetingItems.Deadline);
+            sb.AppendLine("BEGIN:VEVENT");
+            sb.AppendLine("DTEND:" + dtEnd.ToUniversalTime().ToString(DateFormat));
+            sb.AppendLine("DTSTAMP:" + now);
+            sb.AppendLine("UID:" + Guid.NewGuid());
+            sb.AppendLine("CREATED:" + now);
+            sb.AppendLine("LAST-MODIFIED:" + now);
+            sb.AppendLine("SEQUENCE:0");
+            sb.AppendLine("SUMMARY:" + meetingItems.Description);
+            sb.AppendLine("TRANSP:OPAQUE");
+            sb.AppendLine("END:VEVENT");
+            sb.AppendLine("END:VCALENDAR");
+            var calendarBytes = Encoding.UTF8.GetBytes(sb.ToString());
+            return File(calendarBytes, "text/calendar", "event.ics");
+        }
 
+        public FileResult MeetingCal(int? id)
+        {
+            //Calendar Meeting
+            var meeting = _context.Meetings.FirstOrDefault(i => i.Id == id);
 
-
+            StringBuilder sb = new StringBuilder();
+            string DateFormat = "yyyyMMddTHHmmssZ";
+            string now = DateTime.Now.ToUniversalTime().ToString(DateFormat);
+            sb.AppendLine("BEGIN:VCALENDAR");
+            sb.AppendLine("PRODID:-//Compnay Inc//Product Application//EN");
+            sb.AppendLine("VERSION:2.0");
+            sb.AppendLine("METHOD:PUBLISH");
+            DateTime dtStart = Convert.ToDateTime(meeting.MeetingDate);
+            sb.AppendLine("BEGIN:VEVENT");
+            sb.AppendLine("DTSTART:" + dtStart.ToUniversalTime().ToString(DateFormat));
+            sb.AppendLine("DTSTAMP:" + now);
+            sb.AppendLine("UID:" + Guid.NewGuid());
+            sb.AppendLine("CREATED:" + now);
+            sb.AppendLine("LAST-MODIFIED:" + now);
+            sb.AppendLine("SEQUENCE:0");
+            sb.AppendLine("SUMMARY:" + meeting.Title);
+            sb.AppendLine("TRANSP:OPAQUE");
+            sb.AppendLine("END:VEVENT");
+            sb.AppendLine("END:VCALENDAR");
+            var calendarBytes = Encoding.UTF8.GetBytes(sb.ToString());
+            return File(calendarBytes, "text/calendar", "event.ics");
+        }
 
         // POST: Meetings/ShowSearchResults
         [HttpPost]
