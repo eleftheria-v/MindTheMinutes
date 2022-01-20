@@ -1,0 +1,36 @@
+public ActionResult DownloadiCal(Object reg)
+        {
+            //Create the calendar
+          
+
+            StringBuilder sb = new StringBuilder();
+            string DateFormat = "yyyyMMddTHHmmssZ";
+            string now = DateTime.Now.ToUniversalTime().ToString(DateFormat);
+            sb.AppendLine("BEGIN:VCALENDAR");
+            sb.AppendLine("PRODID:-//Compnay Inc//Product Application//EN");
+            sb.AppendLine("VERSION:2.0");
+            sb.AppendLine("METHOD:PUBLISH");
+            DateTime dtStart = Convert.ToDateTime(now);
+            DateTime dtEnd = Convert.ToDateTime(DateFormat);
+            sb.AppendLine("BEGIN:VEVENT");
+            sb.AppendLine("DTSTART:" + dtStart.ToUniversalTime().ToString(DateFormat));
+            sb.AppendLine("DTEND:" + dtEnd.ToUniversalTime().ToString(DateFormat));
+            sb.AppendLine("DTSTAMP:" + now);
+            sb.AppendLine("UID:" + Guid.NewGuid());
+            sb.AppendLine("CREATED:" + now);
+            //sb.AppendLine("X-ALT-DESC;FMTTYPE=text/html:" + res.DetailsHTML);
+            sb.AppendLine("DESCRIPTION:TEST");
+            sb.AppendLine("LAST-MODIFIED:" + now);
+            sb.AppendLine("SEQUENCE:0");
+            sb.AppendLine("STATUS:CONFIRMED");
+            sb.AppendLine("SUMMARY:SUMMARY");
+            sb.AppendLine("TRANSP:OPAQUE");
+            sb.AppendLine("END:VEVENT");
+            sb.AppendLine("END:VCALENDAR");
+            //var calendarBytes = Encoding.UTF8.GetBytes(sb.ToString());
+            //MemoryStream ms = new MemoryStream(calendarBytes);
+            //System.Net.Mail.Attachment attachment = new System.Net.Mail.Attachment(ms, "event.ics", "text/calendar");
+            //message.Attachments.Add(attachment);
+            byte[] calendarBytes = Encoding.UTF8.GetBytes(iCal); //iCal is the calendar string
+            return File(calendarBytes, "text/calendar", "event.ics");
+        }
