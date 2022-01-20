@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Meeting_Minutes.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220118203909_Testel")]
-    partial class Testel
+    [Migration("20220120100234_MigrationE")]
+    partial class MigrationE
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -257,8 +257,9 @@ namespace Meeting_Minutes.Migrations
                     b.Property<int>("MeetingId")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ParticipantsId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Participant")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
