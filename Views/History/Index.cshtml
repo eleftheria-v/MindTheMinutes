@@ -66,7 +66,7 @@
                 @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ExternalParticipants)
+                @Html.DisplayNameFor(model => model.Participants)
             </th>
             <th></th>
         </tr>
@@ -93,7 +93,7 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ExternalParticipants)
+                @Html.DisplayFor(modelItem => item.Participants)
             </td>
             <td>
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a>

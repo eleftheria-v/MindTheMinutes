@@ -42,7 +42,7 @@ namespace Meeting_Minutes.Models
         public string Title { get; set; }  //The title of the meeting  
 
         [Required]
-        [Display(Name = "External Participants")]
-        public string ExternalParticipants { get; set; } // A comma-separated string, keeping the mails of external(not registered in the system) participants.
+        [Display(Name = "Participants")]
+        public string Participants { get; set; } // A comma-separated string, keeping the mails of external(not registered in the system) participants.
     }
 }

@@ -85,14 +85,14 @@ namespace Meeting_Minutes.Data
             {
                 context.Add<Meeting>(new Meeting { Title = "My Seeded Test Meeting",
                                                     CreatedBy = "jimmy", 
-                                                    ExternalParticipants = "someRandomPeopleIPaidForTestings",
+                                                    Participants = "someRandomPeopleIPaidForTestings",
                                                     CreatedDate = DateTime.Now, 
                                                     DateUpdated = DateTime.Now,
                                                     MeetingDate = DateTime.Today.AddDays(1) });
 
                 context.Add<Meeting>(new Meeting {  Title = "My Second Seeded Test Meeting",
                                                     CreatedBy = "jimmy",
-                                                    ExternalParticipants = "puppies",
+                                                    Participants = "puppies",
                                                     CreatedDate = DateTime.Now,
                                                     DateUpdated = DateTime.Now,
                                                     MeetingDate = DateTime.Today.AddDays(2)
