@@ -1,4 +1,5 @@
 ﻿using Meeting_Minutes.Data;
+using Meeting_Minutes.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +36,7 @@ namespace Meeting_Minutes.Controllers
             {
                 var meetings = await _context.Meetings.Where(j => j.MeetingDate >= dateFrom && j.MeetingDate <= dateTo).ToListAsync();
                 return View("Index", meetings);
+                
             }
             else if (!String.IsNullOrEmpty(SearchPhrase) && (dateFrom.HasValue || dateTo.HasValue))
             {
@@ -69,5 +71,6 @@ namespace Meeting_Minutes.Controllers
                 return View("Index", meetings);
             }
         }
+    
     }
 }

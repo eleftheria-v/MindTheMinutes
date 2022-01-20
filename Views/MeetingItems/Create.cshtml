@@ -37,8 +37,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="RiskLevel" class="control-label"></label>
-                <input asp-for="RiskLevel" class="form-control" />
-                <span asp-validation-for="RiskLevel" class="text-danger"></span>
+                
+                
+         @Html.DropDownList("RiskLevel", new SelectList(ViewBag.Risks, "Value", "Text"))
+               
             </div>
             <div class="form-group">
                 <label asp-for="RequestedBy" class="control-label"></label>
@@ -55,7 +57,7 @@
                     <input class="form-check-input" asp-for="VisibleInMinutes" /> @Html.DisplayNameFor(model => model.VisibleInMinutes)
                 </label>
             </div>
-            <div class="form-group">
+       @*     <div class="form-group">
                 <label asp-for="FileAttachment" class="control-label"></label>
                 <input asp-for="FileAttachment" class="form-control" />
                 <span asp-validation-for="FileAttachment" class="text-danger"></span>
@@ -69,7 +71,7 @@
                 <label asp-for="FileType" class="control-label"></label>
                 <input asp-for="FileType" class="form-control" />
                 <span asp-validation-for="FileType" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                     <div class="col-md-10">
                         <input asp-for="FileList" type="file"/>
