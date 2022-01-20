@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Meeting_Minutes.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220120100234_MigrationE")]
-    partial class MigrationE
+    [Migration("20220120102140_migrationP")]
+    partial class migrationP
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
