@@ -1,10 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace Meeting_Minutes.Models
 {
     public class MeetingItem //will keep the meeting items in a master-detail relationship (one meeting, many items)
 
     {
+      
         [Key]
         public int Id { get; set; } //The primary key of this item
 
@@ -43,6 +46,10 @@ namespace Meeting_Minutes.Models
         [Required] //if attachment exists
         [Display(Name = "File Type")]
         public string FileType { get; set; } //The file type (MIME type) of the attachment to be retrieved
+
+        [NotMapped]
+        public List<IFormFile> FileList { get; set; }
+
 
     }
 }
