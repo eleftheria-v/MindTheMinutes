@@ -16,3 +16,8 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.myDiv{
+  margin-top: 200px;
+  text-align:left;
+}
