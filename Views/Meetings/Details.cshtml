@@ -57,14 +57,18 @@
 </div>
 
 <div>
-	<a asp-action="Edit" asp-route-id="@Model.Meeting?.Id">Edit</a> |
-	<a asp-action="Index">Back to List</a> |
-	<a asp-action="DownloadCSV" asp-route-id="@Model.Meeting.Id" asp-controller="Meetings">Download CSV</a>
+ <a type="button" class="btn btn-primary" asp-action="Index"><i class="bi bi-backspace"> Back to List</i></a>|
+
+<a type="button" class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Meeting?.Id"><i class="bi bi-pencil-square">Edit</i></a>|
+
+
+   <a type="button" class="btn btn-primary" asp-action="DownloadCSV" asp-route-id="@Model.Meeting.Id" asp-controller="Meetings"><i class="bi bi-file-earmark-excel"> Download CSV</i></a>
+	
 
 </div>
 <div class="text-end">
-	<button class="btn btn-success" asp-action="Create" asp-route-id="@Model.Meeting.Id" asp-controller="MeetingItems"> Add New Meeting Item  </button>
-	<button class="btn btn-success" asp-action="SendMail" asp-route-id="@Model.Meeting.Id" asp-controller="Meetings"> SendMailButtonPleasePressMe  </button>
+	<a type="button" class="btn btn-success" asp-action="Create" asp-route-id="@Model.Meeting.Id" asp-controller="MeetingItems"><i class="bi bi-plus-circle-dotted"> Add New Meeting Item</i></a>
+	<a type="button" class="btn btn-primary" asp-action="SendMail" asp-route-id="@Model.Meeting.Id" asp-controller="Meetings"> <i class="bi bi-envelope"> SendMail</i> </a>
 
 	@*<p>
 		<a asp-action="Create" asp-route-id="@Model.Meeting.Id" asp-controller="MeetingItems"> Add New Meeting Item </a>

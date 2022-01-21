@@ -6,9 +6,9 @@
     var meetingID = ViewBag.Message;
 }
 
-<h1>Create</h1>
 
-<h4>MeetingItem</h4>
+
+<h4>Meeting Item</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -35,13 +35,13 @@
                 <input asp-for="AssignedTo" class="form-control" />
                 <span asp-validation-for="AssignedTo" class="text-danger"></span>
             </div>
-            <div class="form-group">
+          @*  <div class="form-group">
                 <label asp-for="RiskLevel" class="control-label"></label>
                 
                 
          @Html.DropDownList("RiskLevel", new SelectList(ViewBag.Risks, "Value", "Text"))
                
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="RequestedBy" class="control-label"></label>
                 <input asp-for="RequestedBy" class="form-control" />
@@ -79,7 +79,7 @@
                     </div>
                 </div>
             <div class="form-group">
-                <input type="submit" asp-route-id="@meetingID" value="Create" class="btn btn-primary" />
+                <input type="submit" asp-route-id="@meetingID" value="Create" class="btn btn-success" />
             </div>
         </form>
     </div>
@@ -89,7 +89,8 @@
 
 @*<partial name="_upload" />*@
 <div>
-    <a asp-action="Index">Back to List</a>
+     <a type="button" class="btn btn-primary" asp-action="Index"><i class="bi bi-backspace"> Back to List</i></a>
+
 </div>
 
 @section Scripts {

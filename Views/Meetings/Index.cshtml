@@ -43,10 +43,15 @@
     </div>
     
 </div>
+<p class="text-end">
+    <a type="button" class="btn btn-success" asp-action="Create"> <i class="bi bi-plus-circle"> Create New</i></a>
 
-<p>
-   <a asp-action="Create">Create New</a>
+  
 </p>
+
+@*<p class="text-end">
+ <a type="button" class="btn-primary" asp-action="Create" ><i class="bi bi-plus-circle">  Create New</i> </a>
+</p>*@
 
 <table class="table table-striped table-hover">
     <thead>
@@ -101,10 +106,13 @@
                     @Html.DisplayFor(modelItem => item.ExternalParticipants)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                   <a asp-action="MeetingCal" asp-route-id="@item.Id">Save .ics</a>
+                   <a type="button" class="btn btn-primary btn-sm"asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-info-circle">Details</i></a> |
+                    <a type="button" class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square">Edit</i></a>
+                 
+                    <a type="button" class="btn btn-primary btn-sm" asp-action="MeetingCal" asp-route-id="@item.Id"><i class="bi bi-file-earmark-arrow-down">Save Ics</i></a> |
+                    <a type="button" class="btn btn-danger btn-sm " asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash">Delete</i></a>
+
+                  
              </td>
                
             </tr>
