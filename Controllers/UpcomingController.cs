@@ -42,6 +42,7 @@ namespace Meeting_Minutes.Controllers
             {
                 var meetings = await _context.Meetings.Where(j => j.MeetingDate >= dateFrom && j.MeetingDate <= dateTo).ToListAsync();
                 return View("Index", meetings);
+                
             }
             else if (!String.IsNullOrEmpty(SearchPhrase) && (dateFrom.HasValue || dateTo.HasValue))
             {

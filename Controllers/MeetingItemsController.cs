@@ -55,6 +55,7 @@ namespace Meeting_Minutes.Controllers
                 return NotFound();
             }
 
+          
             var meeting = _context.Meetings
                 .FirstOrDefault(m => m.Id == id);
 
@@ -64,6 +65,10 @@ namespace Meeting_Minutes.Controllers
             }
 
             ViewBag.Message = $"{id}";
+            ViewBag.Risks = _context.ListValues.Where(x => x.ListTypeID == 1).Select(x => new SelectListItem{
+                  Value = x.ID.ToString(),
+                  Text = x.Value
+              }).ToList();
 
             return View();
         }
@@ -71,8 +76,8 @@ namespace Meeting_Minutes.Controllers
         // POST: 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MeetingId,Description,Deadline,AssignedTo,RiskLevel,RequestedBy,ChangeRequested,VisibleInMinutes,FileAttachment,FileName,FileType,FileList")] MeetingItem meetingItem, int id)
-        {
+        public async Task<IActionResult> Create([Bind("MeetingId,Description,Deadline,AssignedTo,RiskLevel,RequestedBy,ChangeRequested,VisibleInMinutes,FileList")] MeetingItem meetingItem, int id)
+        { //,FileAttachment,FileName,FileType
             if (ModelState.IsValid)
             {
                 try
@@ -249,6 +254,7 @@ namespace Meeting_Minutes.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        
     }
 
 }

@@ -37,18 +37,18 @@ namespace Meeting_Minutes.Models
         public bool VisibleInMinutes { get; set; } = true; //A field indicating whether this item will be included in the meeting notes email to be automatically sent by the system upon meeting closure. If a record has this field as false, it should not be included in the meeting notes email
 
         [Display(Name = "File Attachment")]
-        public string FileAttachment { get; set; } //We can either store a path to the file system when the uploaded attachment will be stored. Remember to include the base path configuration in the App Administration screen or we can store the attachment to the database(binary data).
+        public string? FileAttachment { get; set; } //We can either store a path to the file system when the uploaded attachment will be stored. Remember to include the base path configuration in the App Administration screen or we can store the attachment to the database(binary data).
 
-        [Required] //if attachment exists
+         //if attachment exists
         [Display(Name = "File Name")]
-        public string FileName { get; set; } //The original file name of the attachment to be retrieved
+        public string? FileName { get; set; } //The original file name of the attachment to be retrieved
 
-        [Required] //if attachment exists
+         //if attachment exists
         [Display(Name = "File Type")]
-        public string FileType { get; set; } //The file type (MIME type) of the attachment to be retrieved
+        public string? FileType { get; set; } //The file type (MIME type) of the attachment to be retrieved
 
         [NotMapped]
-        public List<IFormFile> FileList { get; set; }
+        public List<IFormFile>? FileList { get; set; }
 
 
     }
