@@ -25,11 +25,12 @@ namespace Meeting_Minutes.Services
             var mail = new MimeMessage();
             mail.Sender = new MailboxAddress(SenderName, SenderEmail);
             
-            mail.Subject = "test Subject";
+            mail.Subject = "New Meeting Created";
             mail.Body = new TextPart(TextFormat.Html) { Text = msg.ToString()};
 
             foreach (var address in participants)
             {
+                mail.Bcc.Add(new MailboxAddress("", address));
                 mail.To.Add(new MailboxAddress("",address));
             }
             

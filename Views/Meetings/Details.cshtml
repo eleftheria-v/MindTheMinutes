@@ -48,10 +48,10 @@
             @Html.DisplayFor(model => model.Meeting.Title)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Meeting.ExternalParticipants)
+            @Html.DisplayNameFor(model => model.Meeting.Participants)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Meeting.ExternalParticipants)
+            @Html.DisplayFor(model => model.Meeting.Participants)
         </dd>
     </dl>
 </div>
@@ -64,7 +64,9 @@
 </div>
 <div class="text-end">
     <button class="btn btn-success" asp-action="Create" asp-route-id="@Model.Meeting.Id" asp-controller="MeetingItems"> Add New Meeting Item  </button>
-<button class="btn btn-success" asp-action="SendMail" asp-route-id="@Model.Meeting.Id" asp-controller="Meetings"> SendMailButtonPleasePressMe  </button>
+@*<button class="btn btn-success" asp-action="SendMail" asp-route-id="@Model.Meeting.Id" asp-controller="Meetings"> SendMailButtonPleasePressMe  </button>
+*@
+<a asp-action="SendMail" asp-route-id="@Model.Meeting.Id" asp-controller="Meetings"> SendMailButtonPleasePressMe </a>
 
 @*<p>
     <a asp-action="Create" asp-route-id="@Model.Meeting.Id" asp-controller="MeetingItems"> Add New Meeting Item </a>

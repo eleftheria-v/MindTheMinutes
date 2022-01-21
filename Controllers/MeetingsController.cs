@@ -29,7 +29,6 @@ namespace Meeting_Minutes.Controllers
         // GET: Meetings
         public async Task<IActionResult> Index()
         {
-
             return View(await _context.Meetings.ToListAsync());
         }
 
@@ -121,6 +120,9 @@ namespace Meeting_Minutes.Controllers
         // GET: Meetings/Create
         public IActionResult Create()
         {
+            ViewBag.User = HttpContext.User.Identity.Name;
+            ViewBag.DateCreated = DateTime.Now.Date;
+
             return View();
         }
 
@@ -129,17 +131,26 @@ namespace Meeting_Minutes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CreatedDate,CreatedBy,DateUpdated,MeetingDate,Title,ExternalParticipants")] Meeting meeting)
+        public async Task<IActionResult> Create(string title, DateTime meetingDate, string participants)//([Bind("Id,CreatedDate,CreatedBy,DateUpdated,MeetingDate,Title,Participants")] Meeting meeting)
         {
-            if (ModelState.IsValid)
+            if (!string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(participants) && meetingDate != null )
             {
+                var meeting = new Meeting();
+
+                meeting.CreatedDate = DateTime.Now.Date;
+                meeting.CreatedBy = HttpContext.User.Identity.Name;
+                meeting.Title = title;
+                meeting.Participants = participants;
+                meeting.MeetingDate = meetingDate;
+
                 _context.Add(meeting);
                 await _context.SaveChangesAsync();
+                
                 TempData["success"] = "Meeting created successfully";
                 return RedirectToAction(nameof(Index));
 
             }
-            return View(meeting);
+            return View(nameof(Index)); //(meeting);
         }
 
         // GET: Meetings/Edit/5
@@ -238,12 +249,14 @@ namespace Meeting_Minutes.Controllers
         {
             var meeting = _context.Meetings.FirstOrDefault(m => m.Id == id);
 
-            var meetingParticipants = _context.MeetingsParticipants.Where(m => m.MeetingId == id).Select(s => s.Participant).ToList();
+
+            var meetingParticipants = meeting.Participants.Split(";").ToList();
+
+
+            
 
 
             var mail = new MimeMessage();
-
-
             _mailService.sendMail(mail, meetingParticipants);
 
             TempData["success"] = "Notification Mail sended successfully";
