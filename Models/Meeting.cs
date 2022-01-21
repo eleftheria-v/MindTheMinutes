@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Meeting_Minutes.Models
-{
+{   [Serializable]
     public class Meeting
     {   [Key]
         public int Id { get; set; } // The primary key of the meeting

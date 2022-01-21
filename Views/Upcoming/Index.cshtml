@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var meetingsBag = ViewBag.MeetingsList;
+   
 }
 
 <h1>Upcoming Meetings</h1>
@@ -47,7 +47,7 @@
 
 <p>
     <a asp-action="Create">Create New</a>
-    <a asp-action="DownloadCSV"  asp-controller="UpcomingController">Download CSV</a>
+    <a asp-action="DownloadCSVUpcoming"  asp-controller="Upcoming">Download CSV</a>
 </p>
 <table class="table">
     <thead>

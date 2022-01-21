@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Meeting_Minutes.Data;
 using Meeting_Minutes.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Session;
+using Newtonsoft.Json;
 
 namespace Meeting_Minutes.Controllers
 {
@@ -16,6 +18,8 @@ namespace Meeting_Minutes.Controllers
     public class UpcomingController : Controller
     {
         private readonly ApplicationDbContext _context;
+    
+
         public UpcomingController(ApplicationDbContext context)
         {
             _context = context;
@@ -30,17 +34,20 @@ namespace Meeting_Minutes.Controllers
         // POST: Meetings/ShowSearchResults
         [HttpPost]
         public async Task<IActionResult> ShowSearchResults(string SearchPhrase, DateTime? dateFrom, DateTime? dateTo)
-        {
+        {   
+            
             if (!String.IsNullOrEmpty(SearchPhrase) && dateFrom.HasValue && dateTo.HasValue)
             {
-                var meetings = await _context.Meetings.Where(j => j.MeetingDate >= dateFrom && j.MeetingDate <= dateTo).ToListAsync();
+                List<Meeting> meetings = await _context.Meetings.Where(j => j.MeetingDate >= dateFrom && j.MeetingDate <= dateTo).ToListAsync();
                 meetings = meetings.Where(m => m.Title.Contains(SearchPhrase)).ToList();
+                HttpContext.Session.SetString("CurrentMeetings", JsonConvert.SerializeObject(meetings));
                 return View("Index", meetings);// await _context.Meetings.Where(j => j.MeetingDate >= dateFrom && j.MeetingDate <= dateTo && j.Title == SearchPhrase).ToListAsync());
 
             }
             else if (String.IsNullOrEmpty(SearchPhrase) && dateFrom.HasValue && dateTo.HasValue)
             {
-                var meetings = await _context.Meetings.Where(j => j.MeetingDate >= dateFrom && j.MeetingDate <= dateTo).ToListAsync();
+                List<Meeting> meetings = _context.Meetings.Where(j => j.MeetingDate >= dateFrom && j.MeetingDate <= dateTo).ToList();
+                HttpContext.Session.SetString("CurrentMeetings", JsonConvert.SerializeObject(meetings));
                 return View("Index", meetings);
                 
             }
@@ -48,14 +55,16 @@ namespace Meeting_Minutes.Controllers
             {
                 if (dateFrom.HasValue)
                 {
-                    var meetings = await _context.Meetings.Where(j => j.MeetingDate >= dateFrom).ToListAsync();
+                    List<Meeting> meetings = await _context.Meetings.Where(j => j.MeetingDate >= dateFrom).ToListAsync();
+                    HttpContext.Session.SetString("CurrentMeetings", JsonConvert.SerializeObject(meetings));
                     meetings = meetings.Where(m => m.Title.Contains(SearchPhrase)).ToList();
                     return View("Index", meetings);
 
                 }
                 else
                 {
-                    var meetings = await _context.Meetings.Where(j => j.MeetingDate <= dateTo).ToListAsync();
+                    List<Meeting> meetings = await _context.Meetings.Where(j => j.MeetingDate <= dateTo).ToListAsync();
+                    HttpContext.Session.SetString("CurrentMeetings", JsonConvert.SerializeObject(meetings));
                     meetings = meetings.Where(m => m.Title.Contains(SearchPhrase)).ToList();
                     return View("Index", meetings);
 
@@ -63,17 +72,22 @@ namespace Meeting_Minutes.Controllers
             }
             else if (dateFrom.HasValue)
             {
-                return View("Index", await _context.Meetings.Where(j => j.MeetingDate >= dateFrom).ToListAsync());
+                List<Meeting> meetings = await _context.Meetings.Where(j => j.MeetingDate >= dateTo).ToListAsync();
+                HttpContext.Session.SetString("CurrentMeetings", JsonConvert.SerializeObject(meetings));
+                return View("Index", meetings);
 
             }
             else if (dateTo.HasValue)
             {
-                return View("Index", await _context.Meetings.Where(j => j.MeetingDate <= dateTo).ToListAsync());
+                List<Meeting> meetings = await _context.Meetings.Where(j => j.MeetingDate <= dateTo).ToListAsync();
+                HttpContext.Session.SetString("CurrentMeetings", JsonConvert.SerializeObject(meetings));
+                return View("Index", meetings);
 
             }
             else
             {
-                var meetings = _context.Meetings.Where(m => m.Title.Contains(SearchPhrase)).ToList();
+                List<Meeting> meetings = _context.Meetings.Where(m => m.Title.Contains(SearchPhrase)).ToList();
+                HttpContext.Session.SetString("CurrentMeetings", JsonConvert.SerializeObject(meetings));
                 return View("Index", meetings);
             }
         }
@@ -101,7 +115,43 @@ namespace Meeting_Minutes.Controllers
             //};
             return View(meeting);
         }
+        public FileContentResult DownloadCSVUpcoming()
+        {
+            var value = HttpContext.Session.GetString("CurrentMeetings"); 
+            List<Meeting> meetingsList = JsonConvert.DeserializeObject<List<Meeting>>(value);
 
+            string csv = "MeetingDate,Title,Status,CreatedBy,CreatedDate,Participants,DateUpdated\n";
+
+            var temp = String.Empty;
+
+         
+            //var meetingItemList = _context.MeetingItems.Where(m => m.MeetingId == id).ToList();
+
+            foreach (var element in meetingsList)
+            {
+
+                temp = element.MeetingDate.ToString();
+                csv = csv + temp;
+                temp = element.Title;
+                csv = csv + "," + temp;
+                temp = element.Status.ToString();
+                csv = csv + "," + temp;
+                temp = element.CreatedBy;
+                csv = csv + temp;
+                temp = element.CreatedDate.ToString();
+                csv = csv + "," + temp;
+                temp = element.ExternalParticipants;
+                csv = csv + "," + temp;
+                temp = element.DateUpdated.ToString();
+                csv = csv + "," + temp;
+                csv = csv + "\n";
+
+            }
+
+
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", "UpcomingMeetingsReport.csv");
+        }
+        
     }
 
 

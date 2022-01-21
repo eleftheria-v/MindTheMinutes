@@ -1,3 +1,4 @@
+@using Meeting_Minutes.Controllers
 @model Meeting_Minutes.Models.MeetingItemsViewModel
 
 @{
@@ -63,8 +64,8 @@
 
 </div>
 <div class="text-end">
-    <button class="btn btn-success" asp-action="Create" asp-route-id="@Model.Meeting.Id" asp-controller="MeetingItems"> Add New Meeting Item  </button>
-<button class="btn btn-success" asp-action="SendMail" asp-route-id="@Model.Meeting.Id" asp-controller="Meetings"> SendMailButtonPleasePressMe  </button>
+    <a type= "button" class="btn btn-success" asp-action="Create" asp-route-id="@Model.Meeting.Id" asp-controller="MeetingItems"> Add New Meeting Item  </a>
+<a type="button" class="btn btn-success" asp-action="SendMail" asp-route-id="@Model.Meeting.Id" asp-controller="Meetings"> SendMailButtonPleasePressMe  </a>
 
 @*<p>
     <a asp-action="Create" asp-route-id="@Model.Meeting.Id" asp-controller="MeetingItems"> Add New Meeting Item </a>
@@ -127,7 +128,7 @@
                     @*var description = EnumHelper<UserPromotion>.GetDisplayValue(value);
             <li>@Html.DisplayFor(e => description )</li>
              }*@
-
+                 @*   @{HelperFunctions.RiskLevelText(meetingItem.RiskLevel);}*@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => meetingItem.RequestedBy)
