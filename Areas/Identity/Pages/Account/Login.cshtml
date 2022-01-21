@@ -32,14 +32,29 @@
                     </div>
                 </div>
                 <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+               @*     <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>*@
+	<button type="submit" class="w-100 btn btn-lg btn-primary"><a class="nav-link text-white" id="login-submit" ><i class="bi bi-door-open"> Log In</i></a></button>
                 </div>
                 <div>
                   @*  <p>
                         <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
                     </p>*@
+                    <p >
+                     
+                        <div class="text-center">
+                             <h5>Or</h5>
+                        </div>
+
+                      
+                       
+                        
+                    </p>
+                    
+                    
                     <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                        
+    <button type="button" class="w-100 btn btn-lg btn-primary"><a class="nav-link text-white" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl"><i class="bi bi-person"> Click to Register</i></a></button>
+                       @* <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>*@
                     </p>
                     @*<p>
                         <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>

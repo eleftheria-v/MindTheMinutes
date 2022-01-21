@@ -17,10 +17,12 @@ namespace Meeting_Minutes.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _environment;
+       
         public MeetingItemsController(ApplicationDbContext context,IWebHostEnvironment environment)
         {
             _context = context;
             _environment = environment;
+          
         }
 
         // GET: MeetingItems
@@ -89,9 +91,12 @@ namespace Meeting_Minutes.Controllers
                     {
                         foreach (var formfile in meetingItem.FileList)
                         {
+
+                            
                             //save it with Guid + random name
                             //nikos path string path = @$"{_environment.WebRootPath}\files\{string.Concat(addGuid, Path.GetRandomFileName())}.png";
-                            string path = @$"{_environment.WebRootPath}\files\ {string.Concat(addGuid, formfile.FileName)}";
+                            string path = @$"{_environment.WebRootPath}\files\{string.Concat(addGuid, formfile.FileName)}";
+                            string uniqueFileName = string.Concat(addGuid, formfile.FileName);
 
                             //The recommended way of saving the file is to save outside of the application folders. 
                             //Because of security issues, if we save the files in the outside directory we can scan those folders
@@ -101,7 +106,7 @@ namespace Meeting_Minutes.Controllers
                             using var fileStream = new FileStream(path, FileMode.Create);
                             await formfile.CopyToAsync(fileStream);
                             meetingItem.FileName = formfile.FileName;
-                            meetingItem.FileAttachment = path;
+                            meetingItem.FileAttachment = uniqueFileName;
                             break;
                         }
                         
@@ -256,7 +261,21 @@ namespace Meeting_Minutes.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        
+
+        public FileResult DownloadFile(string Name)
+
+        {
+
+
+            string FilePath = Name; //Path.Combine(_environment.WebRootPath, "ProductList");
+
+            //string FileNameWithPath = Path.Combine(FilePath, Name);
+
+            byte[] bytes = System.IO.File.ReadAllBytes(FilePath);
+
+            return File(bytes, "application/octet-stream", "testDoc.txt");
+
+        }
     }
 
 }

@@ -117,12 +117,8 @@
 			<th>
 				File Attachment @*@Html.DisplayNameFor(model => meetingItem.FileAttachment)*@
 			</th>
-			<th>
-				File Name @*@Html.DisplayNameFor(model => meetingItem.FileName)*@
-			</th>
-			<th>
-				WILL BE DELETED KALISPERA@*@Html.DisplayNameFor(model => meetingItem.FileType)*@
-			</th>
+			
+			
 			<th></th>
 		</tr>
 	</thead>
@@ -164,16 +160,14 @@
 					}
 					else
 					{
-						<a href="@meetingItem.FileAttachment.ToString()" target=_blank>link</a>
+						@*<a href="@meetingItem.FileAttachment.ToString()" target=_blank download >link</a>*@
+                        <a href="~/files/@meetingItem.FileAttachment.ToString()" target=_blank download >link</a>
 					}
+                    @*Html.ActionLink("Download", "DownloadFile", new { Name = "download.txt" }) *@
 					@*<a href="@Html.DisplayFor(modelItem => meetingItem.FileAttachment)">link</a>*@
 				</td>
-				<td>
-					@Html.DisplayFor(modelItem => meetingItem.FileName)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => meetingItem.FileType)
-				</td>
+				
+				
 				<td>
 					<a asp-action="DownloadiCal" asp-route-id="@meetingItem.Id">Save .ics</a>
 				</td>
