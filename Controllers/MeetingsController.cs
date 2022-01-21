@@ -177,7 +177,7 @@ namespace Meeting_Minutes.Controllers
         public IActionResult Create()
         {
             ViewBag.User = HttpContext.User.Identity.Name;
-            ViewBag.DateCreated = DateTime.Now.Date;
+            ViewBag.DateCreated = DateTime.Now;
 
             return View();
         }
@@ -193,7 +193,7 @@ namespace Meeting_Minutes.Controllers
             {
                 var meeting = new Meeting();
 
-                meeting.CreatedDate = DateTime.Now.Date;
+                meeting.CreatedDate = DateTime.Now;
                 meeting.CreatedBy = HttpContext.User.Identity.Name;
                 meeting.Title = title;
                 meeting.Participants = participants;

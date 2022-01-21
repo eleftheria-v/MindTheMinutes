@@ -111,6 +111,7 @@
                  
                     <a type="button" class="btn btn-primary btn-sm" asp-action="MeetingCal" asp-route-id="@item.Id"><i class="bi bi-file-earmark-arrow-down">Save Ics</i></a> |
                     <a type="button" class="btn btn-danger btn-sm " asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash">Delete</i></a>
+                    <a asp-controller="MeetingItems" asp-action="Create" asp-route-id="@item.Id">Start Meeting</a>
 
                   
              </td>

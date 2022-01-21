@@ -140,7 +140,7 @@ namespace Meeting_Minutes.Controllers
                 csv = csv + temp;
                 temp = element.CreatedDate.ToString();
                 csv = csv + "," + temp;
-                temp = element.ExternalParticipants;
+                temp = element.Participants;
                 csv = csv + "," + temp;
                 temp = element.DateUpdated.ToString();
                 csv = csv + "," + temp;
