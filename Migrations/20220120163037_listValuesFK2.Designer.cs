@@ -4,6 +4,7 @@ using Meeting_Minutes.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Meeting_Minutes.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220120163037_listValuesFK2")]
+    partial class listValuesFK2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,8 +154,6 @@ namespace Meeting_Minutes.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ListTypeID");
-
                     b.ToTable("ListValues");
                 });
 
@@ -175,12 +175,12 @@ namespace Meeting_Minutes.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("MeetingDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Participants")
+                    b.Property<string>("ExternalParticipants")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("MeetingDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -436,17 +436,6 @@ namespace Meeting_Minutes.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("Meeting_Minutes.Models.ListValue", b =>
-                {
-                    b.HasOne("Meeting_Minutes.Models.ListType", "ListType")
-                        .WithMany()
-                        .HasForeignKey("ListTypeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ListType");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

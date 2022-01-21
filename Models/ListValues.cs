@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Meeting_Minutes.Models
 {
@@ -8,7 +9,9 @@ namespace Meeting_Minutes.Models
         public int ID { get; set; }
         
         [Required]
-        public int TypeID { get; set; }
+       
+        public int ListTypeID { get; set; }
+        public ListType ListType { get; set; }
 
         [Required]
         public string Value { get; set; }
