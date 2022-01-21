@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 
 using MimeKit.Text;
 using Meeting_Minutes.Services.IServices;
+using Meeting_Minutes.Models;
 
 namespace Meeting_Minutes.Services
 {
@@ -20,20 +21,33 @@ namespace Meeting_Minutes.Services
         string msg ="test";
         //message.Body = ("")
 
-        public void sendMail(MimeMessage message, List<String> participants)
+        public void sendMail(MimeMessage message, List<String> participants, List<MeetingItem> meetingItems, Meeting meeting)
         {
+
+
             var mail = new MimeMessage();
             mail.Sender = new MailboxAddress(SenderName, SenderEmail);
-            
-            mail.Subject = "New Meeting Created";
-            mail.Body = new TextPart(TextFormat.Html) { Text = msg.ToString()};
+            mail.Subject = $"A new meeting has been Created with title: {meeting.Title} .";
+
+            var body = "The below Meeting Items where discussed: \n\n";
+
+            foreach (var item in meetingItems)
+            {
+                
+                body += $"Description : {item.Description} \n" +
+                        $"Deadline : {item.Deadline} \n\n";
+                
+                //body += $"Risk level : {item.RiskLevel}";
+            }
 
             foreach (var address in participants)
             {
                 mail.Bcc.Add(new MailboxAddress("", address));
                 mail.To.Add(new MailboxAddress("",address));
             }
-            
+
+            //string body = $"{body1}{body2}";
+            mail.Body = new TextPart(TextFormat.Text) { Text = body};
 
             using (var smtp = new SmtpClient()) 
             {

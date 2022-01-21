@@ -63,10 +63,17 @@
 
 </div>
 <div class="text-end">
-    <button class="btn btn-success" asp-action="Create" asp-route-id="@Model.Meeting.Id" asp-controller="MeetingItems"> Add New Meeting Item  </button>
+    @*<button class="btn btn-success" asp-action="Create" asp-route-id="@Model.Meeting.Id" asp-controller="MeetingItems"> Add New Meeting Item  </button>*@
 @*<button class="btn btn-success" asp-action="SendMail" asp-route-id="@Model.Meeting.Id" asp-controller="Meetings"> SendMailButtonPleasePressMe  </button>
 *@
-<a asp-action="SendMail" asp-route-id="@Model.Meeting.Id" asp-controller="Meetings"> SendMailButtonPleasePressMe </a>
+<a asp-action="Create" asp-route-id="@Model.Meeting.Id" asp-controller="MeetingItems"> Add New Meeting Item</a>
+
+    @if(@Model.Meeting.Status == MeetingStatus.Started)
+    {
+        <a asp-action="SendMail" asp-route-id="@Model.Meeting.Id" asp-controller="Meetings"> End Meeting & Send Mails </a>
+    }
+
+@*<a asp-action="SendMail" asp-route-id="@Model.Meeting.Id" asp-controller="Meetings"> SendMailButtonPleasePressMe </a>*@
 
 @*<p>
     <a asp-action="Create" asp-route-id="@Model.Meeting.Id" asp-controller="MeetingItems"> Add New Meeting Item </a>

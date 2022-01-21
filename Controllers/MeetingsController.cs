@@ -185,6 +185,8 @@ namespace Meeting_Minutes.Controllers
             {
                 try
                 {
+                    meeting.DateUpdated = DateTime.Now;
+                    
                     _context.Update(meeting);
                     await _context.SaveChangesAsync();
 
@@ -248,16 +250,15 @@ namespace Meeting_Minutes.Controllers
         public IActionResult SendMail(int id)
         {
             var meeting = _context.Meetings.FirstOrDefault(m => m.Id == id);
-
-
+            var meetingItems = _context.MeetingItems.Where(i => i.MeetingId == id).ToList();
             var meetingParticipants = meeting.Participants.Split(";").ToList();
 
 
-            
-
-
             var mail = new MimeMessage();
-            _mailService.sendMail(mail, meetingParticipants);
+            _mailService.sendMail(mail, meetingParticipants, meetingItems, meeting);
+
+            meeting.Status = MeetingStatus.Finished;
+            _context.SaveChanges();
 
             TempData["success"] = "Notification Mail sended successfully";
             return RedirectToAction("Index");
