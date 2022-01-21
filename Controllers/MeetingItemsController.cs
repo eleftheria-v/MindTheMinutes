@@ -96,8 +96,7 @@ namespace Meeting_Minutes.Controllers
                             //The recommended way of saving the file is to save outside of the application folders. 
                             //Because of security issues, if we save the files in the outside directory we can scan those folders
                             //in background checks without affecting the application. 
-                            //string path = $"{_config["AppSettings:FileRootPath"]}/{string.Concat(addGuid, Path.GetRandomFileName())}.png";
-
+                            //string path = $"{_config["AppSettings:FileRootPath"]}/{string.Concat(addGuid, Path.GetRandomFileName())}.png
 
                             using var fileStream = new FileStream(path, FileMode.Create);
                             await formfile.CopyToAsync(fileStream);
@@ -115,8 +114,11 @@ namespace Meeting_Minutes.Controllers
                     throw;
                 }
 
-              
+                var meeting = _context.Meetings.FirstOrDefault(m => m.Id == id);
+
+                meeting.Status = MeetingStatus.Started;
                 meetingItem.MeetingId = id;
+                
                 _context.Add(meetingItem);
                 await _context.SaveChangesAsync();
                 TempData["success"] = "Meeting Item has been successfully Created";

@@ -175,12 +175,12 @@ namespace Meeting_Minutes.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ExternalParticipants")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("MeetingDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Participants")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");

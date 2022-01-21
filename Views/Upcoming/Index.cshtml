@@ -78,7 +78,7 @@
                 @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ExternalParticipants)
+                @Html.DisplayNameFor(model => model.Participants)
             </th>
             <th></th>
         </tr>
@@ -105,7 +105,7 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ExternalParticipants)
+                @Html.DisplayFor(modelItem => item.Participants)
             </td>
             <td>
                    <a type="button" class="btn btn-primary btn-sm"asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-info-circle">Details</i></a>

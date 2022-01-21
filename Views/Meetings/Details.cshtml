@@ -9,52 +9,52 @@
 <h1>Details</h1>
 
 <div>
-	<h4>Meeting</h4>
-	<hr />
-	<dl class="row">
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Meeting.CreatedDate)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Meeting.CreatedDate)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Meeting.CreatedBy)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Meeting.CreatedBy)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Meeting.DateUpdated)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Meeting.DateUpdated)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Meeting.MeetingDate)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Meeting.MeetingDate)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Meeting.Status)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Meeting.Status)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Meeting.Title)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Meeting.Title)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Meeting.ExternalParticipants)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Meeting.ExternalParticipants)
-		</dd>
-	</dl>
+    <h4>Meeting</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Meeting.CreatedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meeting.CreatedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Meeting.CreatedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meeting.CreatedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Meeting.DateUpdated)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meeting.DateUpdated)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Meeting.MeetingDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meeting.MeetingDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Meeting.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meeting.Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Meeting.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meeting.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Meeting.Participants)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meeting.Participants)
+        </dd>
+    </dl>
 </div>
 
 <div>
@@ -68,8 +68,17 @@
 
 </div>
 <div class="text-end">
-	<a type="button" class="btn btn-success" asp-action="Create" asp-route-id="@Model.Meeting.Id" asp-controller="MeetingItems"><i class="bi bi-plus-circle-dotted"> Add New Meeting Item</i></a>
-	<a type="button" class="btn btn-primary" asp-action="SendMail" asp-route-id="@Model.Meeting.Id" asp-controller="Meetings"> <i class="bi bi-envelope"> SendMail</i> </a>
+    @*<button class="btn btn-success" asp-action="Create" asp-route-id="@Model.Meeting.Id" asp-controller="MeetingItems"> Add New Meeting Item  </button>*@
+@*<button class="btn btn-success" asp-action="SendMail" asp-route-id="@Model.Meeting.Id" asp-controller="Meetings"> SendMailButtonPleasePressMe  </button>
+*@
+<a asp-action="Create" asp-route-id="@Model.Meeting.Id" asp-controller="MeetingItems"> Add New Meeting Item</a>
+
+    @if(@Model.Meeting.Status == MeetingStatus.Started)
+    {
+        <a asp-action="SendMail" asp-route-id="@Model.Meeting.Id" asp-controller="Meetings"> End Meeting & Send Mails </a>
+    }
+
+@*<a asp-action="SendMail" asp-route-id="@Model.Meeting.Id" asp-controller="Meetings"> SendMailButtonPleasePressMe </a>*@
 
 	@*<p>
 		<a asp-action="Create" asp-route-id="@Model.Meeting.Id" asp-controller="MeetingItems"> Add New Meeting Item </a>
