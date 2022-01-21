@@ -15,6 +15,7 @@ using System.Text;
 
 namespace Meeting_Minutes.Controllers
 {
+   
     [Authorize]
     public class MeetingsController : Controller
     {
@@ -89,6 +90,8 @@ namespace Meeting_Minutes.Controllers
             var calendarBytes = Encoding.UTF8.GetBytes(sb.ToString());
             return File(calendarBytes, "text/calendar", "event.ics");
         }
+
+
 
         // POST: Meetings/ShowSearchResults
         [HttpPost]
@@ -305,7 +308,7 @@ namespace Meeting_Minutes.Controllers
 
         public FileContentResult DownloadCSV(int id)
         {
-            string csv = String.Empty;
+            string csv = "Description,AssignedTo,RiskLevel,Deadline,MeetingId,RequestedBy,ChangeRequested\n";
             var temp = String.Empty;
             var meetingItemList = _context.MeetingItems.Where(m => m.MeetingId == id).ToList();
 
@@ -331,7 +334,7 @@ namespace Meeting_Minutes.Controllers
             }
 
 
-            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", "Report123.csv");
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", "MeetingItemsReport.csv");
         }
 
     }

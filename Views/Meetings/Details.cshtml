@@ -1,3 +1,4 @@
+@using Meeting_Minutes.Controllers
 @model Meeting_Minutes.Models.MeetingItemsViewModel
 
 @{
@@ -117,32 +118,32 @@
 		{
 			<tr>
 
-				<td>
-					@Html.DisplayFor(modelItem => meetingItem.Description)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => meetingItem.Deadline)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => meetingItem.AssignedTo)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => meetingItem.RiskLevel)
-					@*var description = EnumHelper<UserPromotion>.GetDisplayValue(value);
-						<li>@Html.DisplayFor(e => description )</li>
-						}*@
-
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => meetingItem.RequestedBy)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => meetingItem.ChangeRequested)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => meetingItem.VisibleInMinutes)
-				</td>
-				<td>
+                <td>
+                    @Html.DisplayFor(modelItem => meetingItem.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => meetingItem.Deadline)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => meetingItem.AssignedTo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => meetingItem.RiskLevel)
+                    @*var description = EnumHelper<UserPromotion>.GetDisplayValue(value);
+            <li>@Html.DisplayFor(e => description )</li>
+             }*@
+                 @*   @{HelperFunctions.RiskLevelText(meetingItem.RiskLevel);}*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => meetingItem.RequestedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => meetingItem.ChangeRequested)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => meetingItem.VisibleInMinutes)
+                </td>
+                <td>
 
 					@if (String.IsNullOrEmpty(meetingItem.FileAttachment))
 					{
