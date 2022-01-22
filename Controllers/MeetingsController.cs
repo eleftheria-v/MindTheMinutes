@@ -231,7 +231,7 @@ namespace Meeting_Minutes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CreatedDate,CreatedBy,DateUpdated,MeetingDate,Status,Title,ExternalParticipants")] Meeting meeting)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CreatedDate,CreatedBy,DateUpdated,MeetingDate,Status,Title,Participants")] Meeting meeting)
         {
             if (id != meeting.Id)
             {

@@ -169,7 +169,9 @@
 				
 				
 				<td>
-					<a asp-action="DownloadiCal" asp-route-id="@meetingItem.Id">Save .ics</a>
+@*					<a asp-action="DownloadiCal" asp-route-id="@meetingItem.Id">Save .ics</a>
+*@                    <a type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Download Calendar File" asp-action="DownloadiCal" asp-route-id="@meetingItem.Id"><i class="bi bi-file-earmark-arrow-down"></i></a>
+
 				</td>
 				@*
 					<td>
